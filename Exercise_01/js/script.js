@@ -7,20 +7,20 @@ This project uses p5.js to replicate Tic Tac Toe.
 
 "use strict";
 
+/** VARIABLES */
+
+// stores grids
 let grids = [];
 
+// to hold the state of the players
 let currentPlayer = 0;
 let winner = "";
 
+// for the general stats, if localstorage is null, proceeds to 0
 let player1Count = parseInt(localStorage.getItem("player1Count")) || 0;
 let player2Count = parseInt(localStorage.getItem("player2Count")) || 0;
 
-console.log(player1Count);
-
-/**
-Description of preload
-*/
-function preload() {}
+/** p5.js SETUP functions **/
 
 /**
 Description of setup
@@ -28,6 +28,7 @@ Description of setup
 function setup() {
 	createCanvas(500, 500);
 	background("black");
+	// initial drawing of the board
 	drawBoard();
 }
 
@@ -36,26 +37,32 @@ function setup() {
  */
 function draw() {
 	background("black");
-	// ruler();
 
+	// draws The turn instructions
 	drawTurn();
+	drawStats();
 
+	// calls for display method
 	grids.forEach((grid) => {
 		grid.display();
 	});
 }
 
+/** BOARD FUNCTIONS */
+
+// checker grid class for each square
 function CheckerGrid(x, y) {
 	this.x = x;
 	this.y = y;
 	this.col = color(255, 100);
-	this.middle = (x * 2 + y * 2) / 2;
-	this.shouldSign = false;
+	this.middle = (x * 2 + y * 2) / 2; // to find the middle point of the square
+	this.shouldSign = false; // conditional to control each sign
 	this.sign = null;
-	this.index = grids.length;
 
 	print(`Middle is: ${this.middle} and x ${this.x} and y ${this.y}
 			and index ${this.index}`);
+
+	// controler function that behaves as displayer when parameters of class prototype change
 	this.display = function () {
 		fill(this.col);
 		square(x, y, 55);
@@ -66,14 +73,18 @@ function CheckerGrid(x, y) {
 		}
 	};
 
+	// this function gets processed when a square is clicked
 	this.clicked = function (sign) {
 		var d = dist(mouseX, mouseY, this.x, this.y);
+
+		// Conditional that controls the right square to get checked
 		if (d < 30 && !this.shouldSign) {
 			this.col = color(255, 0, 200);
 			this.shouldSign = true;
 
 			this.sign = sign;
 
+			// controller for whenever a square is checked change the turn
 			if (currentPlayer == 0) {
 				currentPlayer = 1;
 			} else if (currentPlayer == 1) {
@@ -98,6 +109,9 @@ function drawBoard() {
 	}
 }
 
+/**
+ *
+ */
 function mousePressed() {
 	for (var i = 0; i < grids.length; i++) {
 		if (currentPlayer === 0) {
@@ -108,14 +122,21 @@ function mousePressed() {
 	}
 }
 
+/**
+ * Evaluaation function for end of the game
+ * processes checker grids and decides accordingly
+ */
 function evaluateBoard() {
 	var signs = [];
 	var calculateFinal = false;
+
 	for (var i = 0; i < grids.length; i++) {
 		signs.push(grids[i].sign);
 	}
+
 	print(signs);
 
+	// goes through the board (the arrays) and evaluates according to the rules
 	for (var i = 0; i < signs.length; i++) {
 		if (evaluateFunction(signs[0], signs[1], signs[2])) {
 			print("top row won");
@@ -149,18 +170,18 @@ function evaluateBoard() {
 			print("right diagonal won");
 			decideWinner(signs[2]);
 			return;
-		} else {
-			print("nobody won");
 		}
 	}
 
-	signs.forEach((sign) => {
-		if (sign == null) {
+	// if there are unchecked grids on the board it stops it from evaluating an endgame result
+	for (var i = 0; i < signs.length; i++) {
+		if (signs[i] == null) {
 			calculateFinal = false;
+			break;
 		} else {
 			calculateFinal = true;
 		}
-	});
+	}
 
 	if (calculateFinal) {
 		print("game done");
@@ -168,6 +189,7 @@ function evaluateBoard() {
 	}
 }
 
+// takes three points of each grid according to check if a winner is decided or not
 function evaluateFunction(a, b, c) {
 	if (a == null || b == null || c == null) {
 		return false;
@@ -176,9 +198,11 @@ function evaluateFunction(a, b, c) {
 	}
 }
 
+/**
+ * End game text updates when a winner is decided
+ */
 function decideWinner(sign) {
 	if (sign === "none") {
-		print("nobody won");
 		winner = "nobody won";
 	} else if (sign === "x") {
 		winner = "Player 1 won the game";
@@ -191,6 +215,9 @@ function decideWinner(sign) {
 	}
 }
 
+/**
+ * Draws the turn instruction text
+ */
 function drawTurn() {
 	if (winner != "") {
 		fill("red");
@@ -204,16 +231,28 @@ function drawTurn() {
 		fill("white");
 		text("Player 2 make a move", 190, 120);
 	}
+}
 
+/**
+ * Draws the stats on board
+ */
+function drawStats() {
+	fill("white");
 	text(`Player 1 stats: ${player1Count}`, 50, 50);
 	text(`Player 2 stats: ${player2Count}`, 50, 70);
 }
 
+/**
+ * Clears local storage that holds stats
+ */
 function resetStats() {
 	localStorage.clear();
 	window.location.reload();
 }
 
+/**
+ * If players wish to start a new round
+ */
 function newRound() {
 	window.location.reload();
 }
