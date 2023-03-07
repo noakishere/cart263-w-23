@@ -1,4 +1,4 @@
-# Template p5 project
+# Data Visualisation project
 
 This project is done for CART 263 course. The purpose of the project is to work with databases and csv tables using p5js built-in functions.
 The project's aim is create a creative visual presentation of the every data points that are provided by numerous databases around the internet.
