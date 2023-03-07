@@ -7,4 +7,4 @@ The project's aim is create a creative visual presentation of the every data poi
 
 What are databases, and what is our relationship in terms of everyday categorizations that are done by researchers, data collectors, investigators, data analysts?
 
-![Screenshot][assets/images/screenshot.png]
+![Screenshot][https://raw.githubusercontent.com/noakishere/cart263-w-23/main/data_visualization/assets/images/screenshot.png]
