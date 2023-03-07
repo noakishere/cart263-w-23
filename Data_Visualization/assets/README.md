@@ -1,3 +1,5 @@
 # Assets folder
 
-The assets folder should contain all the non-code parts of your project. For now there are folders for image files and sound files. If you needed to use font files, for example, you would create another folder called `fonts` and put them in there.
+CSV file reference: https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=1310084601
+
+All other assets are created by the author himself.

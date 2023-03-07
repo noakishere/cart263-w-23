@@ -1,3 +1,8 @@
 # Template p5 project
 
-This is the README file for the entire project. For more official projects you should write information here about the nature of the project, your name, any special explanations of how the project works, etc.
+This project is done for CART 263 course. The purpose of the project is to work with databases and csv tables using p5js built-in functions.
+The project's aim is create a creative visual presentation of the every data points that are provided by numerous databases around the internet.
+
+## Intersectional Meanings and purposes
+
+What are databases, and what is our relationship in terms of everyday categorizations that are done by researchers, data collectors, investigators, data analysts?
